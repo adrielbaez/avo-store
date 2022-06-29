@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import { Layout } from "../components/layouts";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <h1>hola</h1>
-    </div>
+    <Layout>
+      <h1>home</h1>
+    </Layout>
   );
 };
 
