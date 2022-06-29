@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import { AvocadoHeader } from "../components/home";
+import { Layout } from "../components/layouts";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <h1>hola</h1>
-    </div>
+    <Layout>
+      <AvocadoHeader />
+    </Layout>
   );
 };
 
