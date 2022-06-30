@@ -1,13 +1,21 @@
-import { Badge, Stack, Text } from "@chakra-ui/react";
-import { NextPage } from "next";
-import Image from "next/image";
 import React from "react";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { Badge, Stack, Text } from "@chakra-ui/react";
 import { SingleAvocado } from "../../interfaces/avocados/avocados";
 
 interface Props {
   product: SingleAvocado;
 }
 export const AvocadoCard: NextPage<Props> = ({ product }) => {
+  const router = useRouter();
+
+  const handleChangePage = () => {
+    router.push(
+      `/product/${product.name.toLocaleLowerCase().split(" ").join("-")}`
+    );
+  };
   return (
     <Stack
       width="250px"
@@ -20,6 +28,7 @@ export const AvocadoCard: NextPage<Props> = ({ product }) => {
       padding={2}
       m={"0px !important"}
       cursor="pointer"
+      onClick={handleChangePage}
     >
       <Stack>
         <Stack
