@@ -22,12 +22,15 @@ export const AvocadoCard: NextPage<Props> = ({ product }) => {
       height="350px"
       borderTopLeftRadius={50}
       borderBottomRightRadius={50}
+      borderBottomLeftRadius={50}
+      borderTopRightRadius={50}
       boxShadow="0px 0px 10px rgba(0, 0, 0, 0.5)"
       className="card-avocado"
       bg={"white"}
       padding={2}
       m={"0px !important"}
       cursor="pointer"
+      overflow={"hidden"}
       onClick={handleChangePage}
     >
       <Stack>
