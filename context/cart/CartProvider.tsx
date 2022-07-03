@@ -12,7 +12,11 @@ const CART_INITIAL_STATE: CartState = {
 export const CartProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
   return (
-    <CartContext.Provider value={CART_INITIAL_STATE}>
+    <CartContext.Provider
+      value={{
+        ...state,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
