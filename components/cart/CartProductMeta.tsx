@@ -1,10 +1,7 @@
 import {
   Badge,
   Box,
-  HStack,
-  Icon,
   Image,
-  Link,
   Stack,
   Text,
   useColorModeValue as mode,

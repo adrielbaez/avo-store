@@ -1,4 +1,3 @@
-import { Stack, Text } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import React from "react";
 import { apiAvocado } from "../../components/api";
