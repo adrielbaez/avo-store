@@ -9,8 +9,6 @@ interface Props {
   product: SingleAvocado;
 }
 const ProductPage: NextPage<Props> = ({ product }) => {
-  console.log(product);
-
   return (
     <Layout title="Avocado - Details">
       <>
