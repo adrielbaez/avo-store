@@ -1,4 +1,4 @@
-import { useContext, useReducer } from "react";
+import { useContext, useReducer, useState } from "react";
 import {
   Box,
   chakra,
@@ -13,8 +13,6 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  List,
-  ListItem,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { CartContext } from "../../context/cart";
@@ -22,7 +20,9 @@ import { SingleAvocado } from "../../interfaces/avocados";
 import { ProductAttributes } from "./Attributes";
 import { CartItem } from "../../interfaces/cart/cartInterface";
 import { productAlreadyInCart } from "../../utils/products";
-
+import { createStandaloneToast } from "@chakra-ui/toast";
+import { toastCustom } from "../toast/toast";
+const { ToastContainer } = createStandaloneToast();
 interface Props {
   product: SingleAvocado;
 }
@@ -40,9 +40,11 @@ export const Details: NextPage<Props> = ({ product }) => {
     };
 
     if (!productAlreadyInCart(cart, productToAdd)) {
-      return addProductToCart(productToAdd);
+      addProductToCart(productToAdd);
+      toastCustom({ title: "Product added to cart", status: "success" });
+      return;
     }
-
+    toastCustom({ title: "Product removed", status: "info" });
     return removeProductFromCart(productToAdd);
   };
 
@@ -142,6 +144,7 @@ export const Details: NextPage<Props> = ({ product }) => {
             </Stack> */}
         </Stack>
       </SimpleGrid>
+      <ToastContainer />
     </Container>
   );
 };

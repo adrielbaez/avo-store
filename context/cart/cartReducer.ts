@@ -4,7 +4,8 @@ import { cartTypes } from "./types";
 
 type CartActionType =
   | { type: "[Cart]-ADD_ITEM"; payload: CartItem[] }
-  | { type: "[Cart]-REMOVE_ITEM"; payload: CartItem[] };
+  | { type: "[Cart]-REMOVE_ITEM"; payload: CartItem[] }
+  | { type: "[Cart]-UPDATE_ITEM"; payload: CartItem[] };
 
 export const cartReducer = (
   state: CartState,
