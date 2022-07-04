@@ -8,17 +8,17 @@ import {
   Stack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { Layout } from "../../components/layouts";
 import { apiAvocado } from "../../components/api";
 import { AvocadosResponse, SingleAvocado } from "../../interfaces/avocados";
 import { CartItem, CartOrderSummary } from "../../components/cart";
 import Link from "next/link";
+import { CartContext } from "../../context/cart";
 
-export interface PropsProducts {
-  productsList: SingleAvocado[];
-}
-const index: NextPage<PropsProducts> = ({ productsList }) => {
+const index: NextPage = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { cart } = useContext(CartContext);
   return (
     <Layout title="Cart - Store">
       <Box
@@ -34,13 +34,12 @@ const index: NextPage<PropsProducts> = ({ productsList }) => {
         >
           <Stack spacing={{ base: "8", md: "10" }} flex="2">
             <Heading fontSize="2xl" fontWeight="extrabold">
-              Shopping Cart (3 items)
+              Shopping Cart ({cart.length})
             </Heading>
 
             <Stack spacing="6">
-              {productsList.slice(0, 2).map((item) => (
-                <CartItem key={item.id} product={item} />
-              ))}
+              {cart.length > 0 &&
+                cart.map((item) => <CartItem key={item.id} product={item} />)}
             </Stack>
           </Stack>
 
@@ -59,16 +58,6 @@ const index: NextPage<PropsProducts> = ({ productsList }) => {
       </Box>
     </Layout>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await apiAvocado.get<AvocadosResponse>("/avo");
-
-  return {
-    props: {
-      productsList: data.data,
-    },
-  };
 };
 
 export default index;

@@ -1,4 +1,5 @@
 import {
+  Button,
   CloseButton,
   Flex,
   Link,
@@ -6,15 +7,17 @@ import {
   SelectProps,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { CartContext } from "../../context/cart";
 // import { PriceTag } from './PriceTag'
 // import { CartProductMeta } from './CartProductMeta'
 import { SingleAvocado } from "../../interfaces/avocados/avocados";
+import { CartItem as CartItemInterface } from "../../interfaces/cart";
 import { CartProductMeta } from "./CartProductMeta";
 import { PriceTag } from "./PriceTag";
 
 type CartItemProps = {
-  product: SingleAvocado;
+  product: CartItemInterface;
   //   onChangeQuantity?: (quantity: number) => void
   //   onClickGiftWrapping?: () => void
   //   onClickDelete?: () => void
@@ -38,6 +41,7 @@ const QuantitySelect = (props: SelectProps) => {
 
 export const CartItem: React.FC<CartItemProps> = ({ product }) => {
   const [quantitySelect, setQuantitySelect] = useState(1);
+  const { removeProductFromCart } = useContext(CartContext);
   return (
     <Flex
       direction={{ base: "column", md: "row" }}
@@ -46,7 +50,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
     >
       <CartProductMeta
         name={product.name}
-        description={product.attributes.description}
+        description={product.description}
         image={product.image}
       />
 
@@ -63,7 +67,13 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
           }}
         />
         <PriceTag price={product.price * quantitySelect} currency={"USD"} />
-        <CloseButton aria-label={`Delete ${product.name} from cart`} />
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => removeProductFromCart(product)}
+        >
+          X
+        </Button>
       </Flex>
 
       {/* Mobile */}

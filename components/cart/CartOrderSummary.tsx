@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { CartContext } from "../../context/cart";
 import { formatPrice } from "./PriceTag";
 
 type OrderSummaryItemProps = {
@@ -30,12 +31,25 @@ const OrderSummaryItem = (props: OrderSummaryItemProps) => {
 };
 
 export const CartOrderSummary = () => {
+  const { cart } = React.useContext(CartContext);
+  const [total, setTotal] = React.useState(0);
+  const calculateTotal = () => {
+    return cart.reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0);
+  };
+  React.useEffect(() => {
+    if (cart.length > 0) {
+      setTotal(calculateTotal());
+    }
+  }, [cart]);
+
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
       <Heading size="md">Order Summary</Heading>
 
       <Stack spacing="6">
-        <OrderSummaryItem label="Subtotal" value={formatPrice(597)} />
+        <OrderSummaryItem label="Subtotal" value={formatPrice(total)} />
         <OrderSummaryItem label="Shipping + Tax">
           <Link href="#" textDecor="underline">
             Calculate shipping
@@ -51,7 +65,7 @@ export const CartOrderSummary = () => {
             Total
           </Text>
           <Text fontSize="xl" fontWeight="extrabold">
-            {formatPrice(597)}
+            {formatPrice(total)}
           </Text>
         </Flex>
       </Stack>

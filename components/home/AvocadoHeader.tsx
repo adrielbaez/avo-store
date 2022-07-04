@@ -1,6 +1,5 @@
 import { Fade, Stack, Text, useDisclosure } from "@chakra-ui/react";
-import { count } from "console";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAvocadoAnimated } from "../hooks/useAvocadoAnimated";
 import { Avocado, DeadAvocado } from "../SVGIcons";
 import { ModalAvocado } from "./Modal";

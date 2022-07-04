@@ -1,6 +1,7 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/cart";
 import { Avocado, Basket } from "../SVGIcons";
 
 export const Navbar = () => {
@@ -8,6 +9,7 @@ export const Navbar = () => {
   const handleRouteChange = (route: string) => {
     router.push(route);
   };
+  const { cart } = useContext(CartContext);
   return (
     <Stack alignItems={"center"}>
       <Stack
@@ -38,7 +40,7 @@ export const Navbar = () => {
         >
           <Basket size="40px" />
           <Text fontSize="xl" fontWeight="bold">
-            Cart
+            Cart {`(${cart.length})`}
           </Text>
         </Stack>
       </Stack>

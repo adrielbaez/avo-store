@@ -1,3 +1,4 @@
+import { useContext, useReducer, useState } from "react";
 import {
   Box,
   chakra,
@@ -12,17 +13,41 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  List,
-  ListItem,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import { CartContext } from "../../context/cart";
 import { SingleAvocado } from "../../interfaces/avocados";
 import { ProductAttributes } from "./Attributes";
-
+import { CartItem } from "../../interfaces/cart/cartInterface";
+import { productAlreadyInCart } from "../../utils/products";
+import { createStandaloneToast } from "@chakra-ui/toast";
+import { toastCustom } from "../toast/toast";
+const { ToastContainer } = createStandaloneToast();
 interface Props {
   product: SingleAvocado;
 }
 export const Details: NextPage<Props> = ({ product }) => {
+  const { cart, addProductToCart, removeProductFromCart } =
+    useContext(CartContext);
+  console.log(cart);
+
+  const handleProductCart = () => {
+    const { attributes, sku, ...rest } = product;
+    const productToAdd: CartItem = {
+      ...rest,
+      description: attributes.description,
+      quantity: 1,
+    };
+
+    if (!productAlreadyInCart(cart, productToAdd)) {
+      addProductToCart(productToAdd);
+      toastCustom({ title: "Product added to cart", status: "success" });
+      return;
+    }
+    toastCustom({ title: "Product removed", status: "info" });
+    return removeProductFromCart(productToAdd);
+  };
+
   return (
     <Container maxW={"7xl"}>
       <SimpleGrid
@@ -106,8 +131,11 @@ export const Details: NextPage<Props> = ({ product }) => {
               transform: "translateY(2px)",
               boxShadow: "lg",
             }}
+            onClick={handleProductCart}
           >
-            Add to cart
+            {cart.some((item) => item.id === product.id)
+              ? "Remove to cart"
+              : "Add to cart"}
           </Button>
 
           {/* <Stack direction="row" alignItems="center" justifyContent={'center'}>
@@ -116,6 +144,7 @@ export const Details: NextPage<Props> = ({ product }) => {
             </Stack> */}
         </Stack>
       </SimpleGrid>
+      <ToastContainer />
     </Container>
   );
 };
