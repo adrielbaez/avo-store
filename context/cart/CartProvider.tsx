@@ -36,6 +36,18 @@ export const CartProvider = ({ children }: any) => {
     );
     return dispatch({ type: "[Cart]-REMOVE_ITEM", payload: newProducts });
   };
+
+  const modifyQuantity = (productID: string, quantity: number) => {
+    const productToUpdate = state.cart.map((productCurrent) => {
+      if (productCurrent.id === productID) {
+        return { ...productCurrent, quantity: quantity };
+      }
+      return productCurrent;
+    });
+    console.log(productToUpdate);
+
+    return dispatch({ type: "[Cart]-UPDATE_ITEM", payload: productToUpdate });
+  };
   return (
     <CartContext.Provider
       value={{
@@ -43,6 +55,7 @@ export const CartProvider = ({ children }: any) => {
         //methods
         addProductToCart,
         removeProductFromCart,
+        modifyQuantity,
       }}
     >
       {children}
