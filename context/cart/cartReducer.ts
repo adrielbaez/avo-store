@@ -22,6 +22,11 @@ export const cartReducer = (
         ...state,
         cart: [...action.payload],
       };
+    case cartTypes.UPDATE_ITEM:
+      return {
+        ...state,
+        cart: [...action.payload],
+      };
 
     default:
       return state;

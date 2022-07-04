@@ -14,17 +14,6 @@ const CART_INITIAL_STATE: CartState = {
 export const CartProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
 
-  // let modifyQuantity = (product: CartItem) => {
-  //   let productToModify = findProductInCart(state.cart, product);
-  //   if (productToModify) {
-  //     productToModify = {
-  //       ...productToModify,
-  //       quantity: productToModify.quantity + 1,
-  //     };
-  //     return dispatch({ type: "[Cart]-ADD_ITEM", payload: productToModify });
-  //   }
-  // };
-
   const addProductToCart = (product: CartItem) => {
     if (!productAlreadyInCart(state.cart, product)) {
       return dispatch({ type: "[Cart]-ADD_ITEM", payload: [product] });
@@ -36,6 +25,17 @@ export const CartProvider = ({ children }: any) => {
     );
     return dispatch({ type: "[Cart]-REMOVE_ITEM", payload: newProducts });
   };
+
+  const modifyQuantity = (productID: string, quantity: number) => {
+    const productToUpdate = state.cart.map((productCurrent) => {
+      if (productCurrent.id === productID) {
+        return { ...productCurrent, quantity: quantity };
+      }
+      return productCurrent;
+    });
+
+    return dispatch({ type: "[Cart]-UPDATE_ITEM", payload: productToUpdate });
+  };
   return (
     <CartContext.Provider
       value={{
@@ -43,6 +43,7 @@ export const CartProvider = ({ children }: any) => {
         //methods
         addProductToCart,
         removeProductFromCart,
+        modifyQuantity,
       }}
     >
       {children}

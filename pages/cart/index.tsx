@@ -15,6 +15,7 @@ import { AvocadosResponse, SingleAvocado } from "../../interfaces/avocados";
 import { CartItem, CartOrderSummary } from "../../components/cart";
 import Link from "next/link";
 import { CartContext } from "../../context/cart";
+import { Info } from "../../components/cart/CartEmpty";
 
 const index: NextPage = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -38,8 +39,11 @@ const index: NextPage = () => {
             </Heading>
 
             <Stack spacing="6">
-              {cart.length > 0 &&
-                cart.map((item) => <CartItem key={item.id} product={item} />)}
+              {cart.length > 0 ? (
+                cart.map((item) => <CartItem key={item.id} product={item} />)
+              ) : (
+                <Info />
+              )}
             </Stack>
           </Stack>
 

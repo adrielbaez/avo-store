@@ -29,7 +29,6 @@ interface Props {
 export const Details: NextPage<Props> = ({ product }) => {
   const { cart, addProductToCart, removeProductFromCart } =
     useContext(CartContext);
-  console.log(cart);
 
   const handleProductCart = () => {
     const { attributes, sku, ...rest } = product;

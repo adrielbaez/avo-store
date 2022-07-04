@@ -42,6 +42,7 @@ export const CartOrderSummary = () => {
     if (cart.length > 0) {
       setTotal(calculateTotal());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   return (

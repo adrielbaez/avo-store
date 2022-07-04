@@ -41,7 +41,7 @@ const QuantitySelect = (props: SelectProps) => {
 
 export const CartItem: React.FC<CartItemProps> = ({ product }) => {
   const [quantitySelect, setQuantitySelect] = useState(1);
-  const { removeProductFromCart } = useContext(CartContext);
+  const { removeProductFromCart, modifyQuantity } = useContext(CartContext);
   return (
     <Flex
       direction={{ base: "column", md: "row" }}
@@ -61,12 +61,13 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
         display={{ base: "none", md: "flex" }}
       >
         <QuantitySelect
-          value={quantitySelect}
+          value={product.quantity}
           onChange={(e) => {
             setQuantitySelect?.(+e.currentTarget.value);
+            modifyQuantity(product.id, +e.currentTarget.value);
           }}
         />
-        <PriceTag price={product.price * quantitySelect} currency={"USD"} />
+        <PriceTag price={product.price} currency={"USD"} />
         <Button
           colorScheme="teal"
           variant="outline"
@@ -84,16 +85,21 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
         justify="space-between"
         display={{ base: "flex", md: "none" }}
       >
-        <Link fontSize="sm" textDecor="underline">
-          Delete
-        </Link>
-        {/* <QuantitySelect
-          value={2}
-          //   onChange={(e) => {
-          //     onChangeQuantity?.(+e.currentTarget.value)
-          //   }}
-        /> */}
-        <PriceTag price={product.price * quantitySelect} currency={"USD"} />
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => removeProductFromCart(product)}
+        >
+          Remove Item
+        </Button>
+        <QuantitySelect
+          value={product.quantity}
+          onChange={(e) => {
+            setQuantitySelect?.(+e.currentTarget.value);
+            modifyQuantity(product.id, +e.currentTarget.value);
+          }}
+        />
+        <PriceTag price={product.price} currency={"USD"} />
       </Flex>
     </Flex>
   );
