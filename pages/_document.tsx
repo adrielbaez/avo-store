@@ -14,7 +14,7 @@ export default function Document() {
       </Head>
       <body
         style={{
-          backgroundColor: "#E5E5E5",
+          backgroundColor: "#f5f5f5",
           width: "100%",
           margin: 0,
           padding: 0,

@@ -7,11 +7,9 @@ import { AvocadoCard } from "./AvocadoCard";
 export const ProductList: NextPage<PropsProducts> = ({ productsList }) => {
   return (
     <Stack
+      flexWrap={"wrap"}
       flexDirection={"row"}
-      justify={["center", "center", "space-evenly", "space-between"]}
-      flexWrap="wrap"
-      gap={4}
-      mt={8}
+      justifyContent={["center", "center", "center", "center"]}
     >
       {productsList ? (
         productsList.map((product, index) => {
